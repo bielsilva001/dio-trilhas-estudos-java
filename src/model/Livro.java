@@ -1,21 +1,23 @@
 package model;
 
 public class Livro {
-   
-    // Adicionando atributos da classe Livro
     private String titulo;
     private String autor;
     private boolean disponivel;
 
-    // Adicionando o constutor da classe
-
     public Livro(String titulo, String autor) {
+        if (titulo == null || titulo.isBlank()) {
+            throw new IllegalArgumentException("O título do livro é obrigatório.");
+        }
+        if (autor == null || autor.isBlank()) {
+            throw new IllegalArgumentException("O autor do livro é obrigatório.");
+        }
+
         this.titulo = titulo;
         this.autor = autor;
-        this.disponivel = true; // Por padrão, todo livro novo nasce disponivel
+        this.disponivel = true;
     }
 
-    // Métodos Getters e Setters (Ação para leitura e escrita)
     public String getAutor() {
         return autor;
     }
@@ -28,7 +30,15 @@ public class Livro {
         return disponivel;
     }
 
-    public void setDisponivel(boolean disponivel) {
-        this.disponivel = disponivel;
+    public void emprestar() {
+        if (!disponivel) {
+            throw new IllegalStateException("O livro já está emprestado.");
+        }
+
+        disponivel = false;
+    }
+
+    public void devolver() {
+        disponivel = true;
     }
 }
